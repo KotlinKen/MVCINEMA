@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.cinema.common.wrapper.EncryptWrapper;
 
-
 /**
  * Servlet Filter implementation class EncryptFilter
  */
