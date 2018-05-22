@@ -39,8 +39,6 @@ public class LoggerFilter implements Filter {
 		      //필터체인의 다음필터체인호출      
 		      chain.doFilter(request, response);
 			
-			
-			
 	}
 	
 

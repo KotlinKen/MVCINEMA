@@ -18,7 +18,7 @@ public class MyFileRenamePolicy implements FileRenamePolicy {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyymmdd_HHmmssSSS");
 			int rndNum = (int)(Math.random()*1000);
 		
-
+			System.out.println("멀티파트 리네임");
 		//확장자명 가져오기
 
 			String fname = oldFile.getName();

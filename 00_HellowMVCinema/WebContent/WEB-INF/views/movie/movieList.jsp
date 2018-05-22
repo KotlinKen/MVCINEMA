@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.*, com.cinema.movie.model.vo.*"%>
-    
-<% List<Movie> mlist = (List<Movie>)request.getAttribute("mlist"); 
+
+<% 
+	List<Movie> mlist = (List<Movie>)request.getAttribute("mlist"); 
+	String pageBar = (String)request.getAttribute("pageBar");
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title> </title>
+
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
+ 
 <style>
 *{padding:0px; margin:0px; }
 .table_common{border-collapse: collapse;}
@@ -19,60 +19,100 @@
 .grade{width:50px;}
 .actor{width:100px;}
 .genre{width:80px;}
+#cinema_container *{box-sizing: border-box; outline:none;}
+#cinema_container{background:#fff; padding:0px;}
+#cinema_container table{border-collapse: collapse; padding:0p; border-top:3px solid #503396; width:100%}
+#cinema_container table th, #cinema_container table td{padding:10px; border-bottom:1px solid #ccc; }
+#cinema_container th{background:#ececec; text-align:left;}
+#cinema_container table th{width:13%;}
+#cinema_container input{padding:10px; width:100%;}
+#cinema_container input[type='button']{background:#ddd; border:none;}
 
+#cinema_container table .birth_tr td{padding:10px 0px;}
+#cinema_container table .birth_tr td input{text-align:center;}
+#cinema_container table .birth_tr .birth{width:80px; padding:10px;}
+#cinema_container table .birth_tr td:first-of-type{padding-right:0px;}
+#cinema_container table .birth_tr td:nth-of-type(3){padding:10px 0px }
+#cinema_container table .birth_tr td:nth-of-type(5){padding-left: 0px}
+
+
+#cinema_container table .phone_tr td{padding:10px 0px; text-align:center;}
+#cinema_container table .phone_tr td input{text-align:center;;}
+#cinema_container table .phone_tr .phone{width:80px; padding:10px;}
+#cinema_container table .phone_tr td:first-of-type{padding-right:0px; width:90px;}
+#cinema_container table .phone_tr td:nth-of-type(3){padding:10px 0px; }
+#cinema_container table .phone_tr td:nth-of-type(5){padding-left: 0px}
+
+.submit_tr button{ background :#503396; border:none; padding:20px; color:#fff; font-size:18px;}
+.submit_tr .cancle_btn{background:#ddd; color:#898989;}
+.submit_btn{ background :#503396; border:none; padding:20px; color:#fff; font-size:18px;}
 </style>
-</head>
+<section id="cinema_container">
+ 
+<div>
+	<ul class="movie_list">
+	</ul>
+</div>
+<div class="pageBar"></div>
+</section>
 
-<body>
-	<table class="table_common">
-		<tr>
-			<th class="mid">영화코드</th>
-			<th class="name">제목</th>
-			<th class="ename">영문제목</th>
-			<th class="grade">연령</th>
-			<th class="time">시간</th>
-			<th class="director">감독</th>
-			<th class="actor">출연진</th>
-			<th class="genre">장르</th>
-			<th class="story">스토리</th>
-			<th class="reldate">개봉일</th>	
-			<th class="poster">포스트</th>	
-			<th class="subimg">서브이미지</th>	
-			<th class="trailer">트레일러</th>	
-			<th class="regdate">등록일자</th>	
-		</tr>
-		<%
-			if(mlist==null || mlist.isEmpty()){
-		%>
-		
-		<tr>
-			<td colspan="9" align="center">데이터가 존재하지 않습니다.</td>
-		</tr>
-				
-		<% }else{		
-			for(Movie m : mlist){
-		%>	
-			<tr>
-				<td><%=m.getMid()%></td>
-				<td><%=m.getName()%></td>
-				<td><%=m.getEname()%></td>
-				<td><%=m.getGrade()%></td>
-				<td><%=m.getTime()%></td>
-				<td><%=m.getDirector()%></td>
-				<td><%=m.getActor()%></td>
-				<td><%=m.getGenre()%></td>
-				<td><%=m.getStory()%></td>
-				<td><%=m.getReldate()%></td>
-				<td><%=m.getPoster()%></td>
-				<td><%=m.getSubimg()%></td>
-				<td><%=m.getTrailer()%></td>
-				<td><%=m.getRegdate()%></td>
-			</tr>	 
+
+
+
+
+
+
+ 
+
+ 
+	<script>
+	var pageNum = 1;
+	function fn_showMovieList(pageNum){
+
+		$.ajax({
+			url : "/cinema/movie/showMovieList",
+			dataType:"json",
+			type: "post",
+			data : {type : "pagingRequest", cPage : pageNum},
+			success:function(data){
+			var mitem = "";
+			for(var i = 1; i<data.length;  i++){
+				dataItem = JSON.stringify(data[i]);
+				mitem += "<li class='movie_item'>";
+				mitem += "<div class='thumb'><img src='/cinema/upload/movie/"+data[i].poster+"' /></div>";
+				mitem += "<div class='movie_infor'>";
+				mitem += "<div class='name'><span>"+data[i].grade+"</span> &nbsp; <span>"+data[i].name+"</span></div>";
+				mitem += "<div class='movie_btn'>";
+				mitem += "<button onclick='fn_showMovieDetail("+data[i].mid+", "+dataItem+");'>상세보기</button>"
+				mitem += "<button onclick='fn_showReservationDetail("+data[i].mid+", "+dataItem+");'>예매하기</button>"
+				mitem += "</div>"
+				mitem += "</div>"		
+				mitem += "</li>";
+			}
+			$(".movie_list").append(mitem);
 			
-			<%}
-		}%>
-		
+			
+			
+			var cPage = data[0].cPage;
+			var pageBar = data[0].pageBar;
+			
+			console.log(pageBar);
+			$(".pageBar").html("<a href='javascript:void(0);' onclick='fn_showMovieList("+pageNum+")'>다음</a>");
+			
+			$(".movie_infor span").each(function(){
+				if($(this).text().length > 9){
+					$(this).text($(this).text().substr(0,9)+"...");
+				}
+			});
+			}
+		});	// ajax end
+		pageNum++;
+	};
 	
-	</table>
-</body>
-</html>
+	
+	
+	$(function(){
+		fn_showMovieList(pageNum);
+	});
+	</script>
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>	

@@ -18,8 +18,13 @@ import com.cinema.common.wrapper.EncryptWrapper;
  */
 @WebFilter(
 		servletNames = { 
+				"UserLogin",
+				"UserJoinEnd",
+				"UserModify",
 				"MemberLoginServlet", 
-				"MemberEnrollEnd", 
+				"MemberEnrollEnd",
+				"MangerReg",
+				"ManagerLogin",
 				//"MemberUpdate"
 				"updatePasswordEnd"
 		})

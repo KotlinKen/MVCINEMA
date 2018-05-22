@@ -1,7 +1,5 @@
 package com.cinema.movie.model.vo;
 
-import java.util.Date;
-import java.util.List;
 
 public class Movie {
 
@@ -10,9 +8,8 @@ public class Movie {
 	private String ename; //영문이름
 	private String grade; //등급
 	private String type;
-	private String time; //러닝타임
+	private int runtime; //러닝타임
 	private String reldate; //개봉년월일
-	private String prddate; //제작년월일
 	private String genre; // *장르코드  : 장르테이블 참조 
 	private String actor; //연기자 
 	private String director; //감독
@@ -21,23 +18,24 @@ public class Movie {
 	private String poster; //포스터 주소
 	private String subimg; //서브이미지 주소
 	private String trailer; //영상주소
-	private Date regdate; //등록일자
+	private String regdate; //등록일자
+	private String status;
+
 	public Movie() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Movie(String mid, String name, String ename, String grade, String type, String time, String reldate, String prddate,
+	public Movie(String mid, String name, String ename, String grade, String type, int runtime, String reldate, String prddate,
 			String genre, String actor, String director, String staff, String story,
-			String poster, String subimg, String trailer, Date regdate) {
+			String poster, String subimg, String trailer, String regdate) {
 		super();
 		this.mid = mid;
 		this.name = name;
 		this.ename = ename;
 		this.grade = grade;
 		this.type = type;
-		this.time = time;
+		this.runtime = runtime;
 		this.reldate = reldate;
-		this.prddate = prddate;
 		this.genre = genre;
 		this.actor = actor;
 		this.director = director;
@@ -47,6 +45,25 @@ public class Movie {
 		this.subimg = subimg;
 		this.trailer = trailer;
 		this.regdate = regdate;
+	}
+	public Movie(String name, String ename, String grade, int runtime,  String type, String reldate, String prddate, String genre,
+			String actor, String director, String staff, String story, String poster, String subimg,
+			String trailer, String status) {
+			this.name = name;
+			this.ename = ename;
+			this.grade = grade;
+			this.type = type;
+			this.runtime = runtime;
+			this.reldate = reldate;
+			this.genre = genre;
+			this.actor = actor;
+			this.director = director;
+			this.staff = staff;
+			this.story = story;
+			this.poster = poster;
+			this.subimg = subimg;
+			this.trailer = trailer;
+			this.status = status;
 	}
 	public String getMid() {
 		return mid;
@@ -78,23 +95,17 @@ public class Movie {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public String getTime() {
-		return time;
+	public int getRuntime() {
+		return runtime;
 	}
-	public void setTime(String time) {
-		this.time = time;
+	public void setRuntime(int runtime) {
+		this.runtime = runtime;
 	}
 	public String getReldate() {
 		return reldate;
 	}
 	public void setReldate(String reldate) {
 		this.reldate = reldate;
-	}
-	public String getPrddate() {
-		return prddate;
-	}
-	public void setPrddate(String prddate) {
-		this.prddate = prddate;
 	}
 	public String getGenre() {
 		return genre;
@@ -144,18 +155,24 @@ public class Movie {
 	public void setTrailer(String trailer) {
 		this.trailer = trailer;
 	}
-	public Date getRegdate() {
+	public String getRegdate() {
 		return regdate;
 	}
-	public void setRegdate(Date regdate) {
+	public void setRegdate(String regdate) {
 		this.regdate = regdate;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	@Override
 	public String toString() {
-		return "Movie [mid=" + mid + ", name=" + name + ", ename=" + ename + ", grade=" + grade + ", time=" + time
-				+ ", reldate=" + reldate + ", prddate=" + prddate + ", genre=" + genre + ", actor=" + actor
+		return "Movie [mid=" + mid + ", name=" + name + ", ename=" + ename + ", grade=" + grade + ", runtime=" + runtime
+				+ ", reldate=" + reldate + ", genre=" + genre + ", actor=" + actor
 				+ ", director=" + director + ", staff=" + staff + ", story=" + story + ", poster=" + poster
-				+ ", subimg=" + subimg + ", trailer=" + trailer + ", regdate=" + regdate + "]";
+				+ ", subimg=" + subimg + ", trailer=" + trailer + ", regdate=" + regdate + ", status=" + status +"]";
 	}
 	
 	

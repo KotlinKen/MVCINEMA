@@ -32,6 +32,14 @@ public class EncryptWrapper extends HttpServletRequestWrapper {
 			System.out.println("암호화후 : " + value);
 			
 			
+		}else if(key != null && key.equals("pw")){
+			value = super.getParameter(key);
+			System.out.println("넘어온값 : " + value);
+			
+			//암호화처리 메소드 호출
+			value = getSha512(value);
+			System.out.println("암호화후 리콰이어 암호 : " + value);
+			
 		}else if(key != null && key.equals("rpassword")){
 			value = super.getParameter(key);
 			System.out.println("암호화전 리콰이어 암호 : " + value);
@@ -43,7 +51,7 @@ public class EncryptWrapper extends HttpServletRequestWrapper {
 		}else {
 			value = super.getParameter(key);
 		}
-		
+		System.out.println(value);
 		return value;
 	}
 

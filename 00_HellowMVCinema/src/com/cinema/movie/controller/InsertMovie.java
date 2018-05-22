@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -54,7 +56,7 @@ public class InsertMovie extends HttpServlet {
 		Movie m = new Movie();
 		
 		//디테일 정보 가져오기
-		JSONObject obj = (JSONObject) readJsonFromUrl("http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=a359d22f05901cbb5c435f8ec69dd00c&movieCd="+ob.get("movieCd")).get("movieInfoResult");
+		JSONObject obj = (JSONObject) readJsonFromUrl("http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=430156241533f1d058c603178cc3ca0e&movieCd="+ob.get("movieCd")).get("movieInfoResult");
 		System.out.println( ((JSONArray)(ob.get("directors"))).length() );
 		System.out.println("이건 개별로 가져온거 " + obj);
 		obj = (JSONObject) obj.get("movieInfo");
@@ -63,8 +65,8 @@ public class InsertMovie extends HttpServlet {
 		String name = (String) obj.get("movieNm");
 		String ename = (String) obj.get("movieNmEn");
 		String time = (String) obj.get("showTm");
-		String prddate = (String) obj.get("prdtYear");
-		String reldate = (String) obj.get("openDt");
+		String prddate =  (String) obj.get("prdtYear");
+		String reldate = (String)obj.get("openDt");
 		String prdtStatNm = (String) obj.get("prdtStatNm");
 		String typeNm = (String) obj.get("typeNm");
 		
@@ -210,9 +212,9 @@ public class InsertMovie extends HttpServlet {
 		m.setMid(mid);
 		m.setName(name);
 		m.setEname(ename);
-		m.setTime(time);
+		//m.setRuntime(time);
 		m.setReldate(reldate);
-		m.setPrddate(prddate);
+		//m.setPrddate(prddate);
 		m.setGrade(audit);
 		m.setGenre(genre);
 		m.setActor(actor);
@@ -225,7 +227,7 @@ public class InsertMovie extends HttpServlet {
 		
 	
 	for(Movie m : movieList) {
-		int result = new MovieService().insertMovie(m);
+		int result = new MovieService().autoInsertMoviesData(m);
 		System.out.println("결과 " + result);
 	}
 	

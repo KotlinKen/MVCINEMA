@@ -26,7 +26,6 @@ public class JDBCTemplate {
 			//클래스객체를 통해서 절대경로 가져오고, 여기서 해당파일을 찾음.
 			//web-inf가 루트가 된다 왜?
 			String fileName = JDBCTemplate.class.getResource("/driver.properties").getPath();
-			System.out.println("fileName@JDBCTemplate="+fileName);
 			prop.load(new FileReader(fileName));
 			
 			

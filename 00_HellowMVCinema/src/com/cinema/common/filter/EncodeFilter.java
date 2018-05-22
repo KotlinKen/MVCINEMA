@@ -25,7 +25,6 @@ public class EncodeFilter implements Filter {
 		
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
-		System.out.println("[utf-8 인코딩 처리됨@EncodeFilter]");
 		
 		//필터체인의 다음 필터를 호출함.
 		chain.doFilter(request, response);
