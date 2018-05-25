@@ -45,6 +45,9 @@
 		<th>좌석</th>
 	</tr>
 
+
+	
+
 	<% int i=0;  for(Map <String, String> m : mlist){ %>
 		<tr onclick='fn_showTicketDetail("<%=m %>")'>
 		<td><%=m.get("BID") %></td>
